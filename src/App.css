@@ -46,15 +46,11 @@
 }
 
 /* ===== Framer Motion Card Updates ===== */
-.pf-card {
-  overflow: hidden; /* Keeps the progress bar contained inside the rounded corners */
-  position: relative; 
-}
+.pf-card { position: relative; }
 
 /* Ensure content sits above the animated background */
 .pf-card-content-wrapper {
-  display: flex;
-  justify-content: space-between;
+  display: block;
   width: 100%;
   position: relative;
   z-index: 2;
@@ -71,10 +67,16 @@
   z-index: 1;
 }
 
+.pf-card-cover-queue .pf-card-progress-bar {
+  background: rgba(250, 204, 21, 0.18);
+  border-right-color: #facc15;
+}
+
+.pf-card-cover-queue .pf-status-text { color: #facc15; }
+
 /* If generating, make the border pulse slightly */
 .pf-card-generating {
   border-color: rgba(59, 130, 246, 0.3);
-  pointer-events: none; /* Optional: prevents clicking the card until it's done */
 }
 
 /* Status Indicators */

@@ -116,11 +116,12 @@
 /* ===== History cards ===== */
 .pf-history-grid {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.25rem;
 }
 
 .pf-card {
-  padding: 1rem;
+  padding: 0;
   border-radius: 1rem;
   background: var(--surface);
   border: 2px solid var(--border-soft);
@@ -331,7 +332,94 @@
   margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
+  gap: 0.75rem;
 }
+
+.pf-field-help {
+  margin: 0.45rem 0 0;
+  color: var(--text-faint);
+  font-size: 0.72rem;
+}
+
+.pf-notice,
+.pf-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.82rem;
+}
+
+.pf-notice {
+  color: var(--text);
+  background: var(--violet-soft);
+  border: 1px solid var(--violet);
+}
+
+.pf-error {
+  color: #ffd3d3;
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid var(--danger);
+}
+
+.pf-reader-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 6rem auto;
+  max-width: 32rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.pf-reader-state h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.5rem;
+}
+
+.pf-reader-state p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.pf-synopsis {
+  max-width: 40rem;
+  margin: 1rem auto 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.pf-thumb-fallback {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: 0.3rem;
+  color: var(--text-faint);
+  font-size: 0.62rem;
+  text-align: center;
+}
+
+.pf-menu-action {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.75rem;
+  text-align: left;
+}
+
+.pf-menu-action:hover:not(:disabled) { background: var(--border-soft); }
+.pf-menu-action:disabled { cursor: not-allowed; opacity: 0.45; }
 
 .pf-btn-primary {
   padding: 0.55rem 1.25rem;
@@ -565,7 +653,10 @@
 /* Keyboard accessibility */
 .pf-mode-btn:focus-visible,
 .pf-panel-step-btn:focus-visible,
-.pf-send-btn:focus-visible {
+.pf-send-btn:focus-visible,
+.pf-menu-btn:focus-visible,
+.pf-card:focus-visible,
+.pf-icon-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
@@ -589,4 +680,65 @@
 
 @keyframes pf-spin {
   to { transform: rotate(360deg); }
+}
+
+/* Cover-first comic library cards */
+.pf-card-vertical {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: visible;
+  min-width: 0;
+}
+
+.pf-card-cover {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: calc(1rem - 2px) calc(1rem - 2px) 0 0;
+  background: linear-gradient(135deg, var(--bg), var(--border-soft));
+}
+
+.pf-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.pf-card:hover .pf-card-cover img { transform: scale(1.03); }
+
+.pf-card-vertical > .pf-menu-wrap {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 10;
+}
+
+.pf-card-vertical > .pf-menu-wrap .pf-menu-btn {
+  background: rgba(11, 13, 20, 0.82);
+  color: var(--text);
+  backdrop-filter: blur(6px);
+}
+
+.pf-card-vertical > .pf-menu-wrap .pf-menu-dropdown { top: 2.35rem; z-index: 30; }
+
+.pf-card-info-surface {
+  position: relative;
+  overflow: hidden;
+  min-height: 7.7rem;
+  border-radius: 0 0 calc(1rem - 2px) calc(1rem - 2px);
+}
+
+.pf-card-info-surface .pf-card-progress-bar { border-radius: 0; }
+.pf-card-content-wrapper { display: block; padding: 1rem; }
+.pf-card-info { min-width: 0; padding-right: 0; }
+
+@media (max-width: 480px) {
+  .pf-history-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .pf-card-content-wrapper { padding: 0.75rem; }
+  .pf-card-title { font-size: 0.9rem; }
+  .pf-status-text { font-size: 0.58rem; }
 }

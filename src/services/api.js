@@ -1,76 +1,55 @@
-// The base URL for your FastAPI backend
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const DEFAULT_API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
 
-export const fetchHistoryApi = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/comics`);
-    if (!response.ok) throw new Error("Failed to fetch history");
-    const data = await response.json();
-    return data.comics || [];
-  } catch (error) {
-    console.error("API Error (fetchHistory):", error);
-    return []; 
+export class ApiError extends Error {
+  constructor(message, status) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
   }
+}
+
+export const getApiBaseUrl = () =>
+  window.localStorage.getItem('panelforge.apiBaseUrl') || DEFAULT_API_BASE_URL;
+
+export const setApiBaseUrl = (url) => {
+  window.localStorage.setItem('panelforge.apiBaseUrl', url.replace(/\/$/, ''));
 };
 
-export const deleteStoryApi = async (id) => {
+export const getAssetUrl = (url) => {
+  if (!url || url.startsWith('http')) return url || '';
+  const origin = getApiBaseUrl().replace(/\/api$/, '');
+  return `${origin}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
+const request = async (path, options = {}) => {
+  const response = await fetch(`${getApiBaseUrl()}${path}`, options);
+  if (response.ok) return response.status === 204 ? null : response.json();
+
+  let message = `Request failed (${response.status})`;
   try {
-    const response = await fetch(`${API_BASE_URL}/comics/${id}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) throw new Error("Failed to delete story");
-    return await response.json();
-  } catch (error) {
-    console.error("API Error (deleteStory):", error);
-    return { success: false };
+    const body = await response.json();
+    message = body.detail || body.message || message;
+  } catch {
+    // The server did not provide a JSON error body.
   }
+  throw new ApiError(message, response.status);
 };
 
-export const fetchComicByIdApi = async (id) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/comics/${id}`);
-    if (!response.ok) throw new Error("Comic not found");
-    return await response.json();
-  } catch (error) {
-    console.error("API Error (fetchComicById):", error);
-    return null;
-  }
-};
+export const fetchHistoryApi = () => request('/comics').then((data) => data.comics || []);
+export const fetchComicByIdApi = (id) => request(`/comics/${encodeURIComponent(id)}`);
 
-export const generateStoryApi = async (prompt, mode, sceneCount = 0) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ topic: prompt, mode: mode, num_scenes: sceneCount }), 
-    });
-    
-    if (!response.ok) throw new Error("Failed to generate story");
-    return await response.json();
-  } catch (error) {
-    console.error("API Error (generateStory):", error);
-    throw error;
-  }
-};
+export const generateStoryApi = (prompt, mode, sceneCount = 0) =>
+  request('/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ topic: prompt, mode, num_scenes: sceneCount }),
+  });
 
-export const pauseStoryApi = async (id) => {
-  await fetch(`${API_BASE_URL}/comics/${id}/pause`, { method: 'POST' });
-};
-
-export const resumeStoryApi = async (id) => {
-  await fetch(`${API_BASE_URL}/comics/${id}/resume`, { method: 'POST' });
-};
-
-// --- NEW: Regenerate Thumbnail API ---
-export const regenerateThumbnailApi = async (id) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/comics/${id}/thumbnail`, { method: 'POST' });
-    if (!response.ok) throw new Error("Failed to regenerate thumbnail");
-    return await response.json();
-  } catch (error) {
-    console.error("API Error (regenerateThumbnail):", error);
-    throw error;
-  }
-};
+export const deleteStoryApi = (id) =>
+  request(`/comics/${encodeURIComponent(id)}`, { method: 'DELETE' });
+export const pauseStoryApi = (id) =>
+  request(`/comics/${encodeURIComponent(id)}/pause`, { method: 'POST' });
+export const resumeStoryApi = (id) =>
+  request(`/comics/${encodeURIComponent(id)}/resume`, { method: 'POST' });
+export const regenerateThumbnailApi = (id) =>
+  request(`/comics/${encodeURIComponent(id)}/thumbnail`, { method: 'POST' });

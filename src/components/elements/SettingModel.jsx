@@ -1,58 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { getApiBaseUrl, setApiBaseUrl } from '../../services/api';
 import '../../styles/HomePage.css';
 
-/**
- * Reusable Settings modal.
- * Owns its own field state — parent only needs to render it and
- * pass `onClose`. Add/remove settings fields here without touching
- * whatever page renders <SettingsModal />.
- */
 const SettingsModal = ({ onClose }) => {
-  const [host, setHost] = useState('http://127.0.0.1:8188');
-  const [artStyle, setArtStyle] = useState('Graphic Novel (Default)');
+  const [apiBaseUrl, setApiBaseUrlValue] = useState(getApiBaseUrl());
+  const closeButtonRef = useRef(null);
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    // TODO: persist settings (e.g. localStorage, API call) here
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+    const onKeyDown = (event) => event.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
+  const handleSave = (event) => {
+    event.preventDefault();
+    setApiBaseUrl(apiBaseUrl.trim());
     onClose();
   };
 
   return (
-    <div className="pf-modal-overlay" onClick={onClose}>
-      <div className="pf-modal" onClick={(e) => e.stopPropagation()}>
-        <h3>Engine Settings</h3>
-
+    <div className="pf-modal-overlay" onMouseDown={onClose}>
+      <div className="pf-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" onMouseDown={(event) => event.stopPropagation()}>
+        <h3 id="settings-title">Engine Settings</h3>
         <form onSubmit={handleSave}>
           <div className="pf-modal-body">
             <div className="pf-field">
-              <label>ComfyUI Host URL</label>
-              <input
-                type="text"
-                value={host}
-                onChange={(e) => setHost(e.target.value)}
-              />
-            </div>
-
-            <div className="pf-field">
-              <label>Default Art Style</label>
-              <select
-                value={artStyle}
-                onChange={(e) => setArtStyle(e.target.value)}
-              >
-                <option>Graphic Novel (Default)</option>
-                <option>Cyberpunk / Anime</option>
-                <option>Dark Fantasy Noir</option>
-              </select>
+              <label htmlFor="api-base-url">FastAPI base URL</label>
+              <input id="api-base-url" type="url" required value={apiBaseUrl} onChange={(event) => setApiBaseUrlValue(event.target.value)} />
+              <p className="pf-field-help">Example: http://127.0.0.1:8000/api</p>
             </div>
           </div>
-
           <div className="pf-modal-footer">
-            <button type="button" onClick={onClose} className="pf-btn-secondary">
-              Cancel
-            </button>
-            <button type="submit" className="pf-btn-primary">
-              Save & Close
-            </button>
+            <button ref={closeButtonRef} type="button" onClick={onClose} className="pf-btn-secondary">Cancel</button>
+            <button type="submit" className="pf-btn-primary">Save</button>
           </div>
         </form>
       </div>
