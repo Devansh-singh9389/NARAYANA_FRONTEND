@@ -1,0 +1,114 @@
+/* Custom Scrollbar for history list */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2d3d;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* Glassmorphism card effect */
+.glass-card {
+  background: rgba(24, 26, 32, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Ping-Pong Mode Switch */
+.mode-toggle-bg {
+  background: #121319;
+  border: 1px solid #2a2d3d;
+}
+
+/* Input Focus Glow */
+.prompt-container {
+  background: #181a20;
+  border: 1px solid #2a2d3d;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prompt-container:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* ===== Framer Motion Card Updates ===== */
+.pf-card {
+  overflow: hidden; /* Keeps the progress bar contained inside the rounded corners */
+  position: relative; 
+}
+
+/* Ensure content sits above the animated background */
+.pf-card-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* The Animated Progress Bar Background */
+.pf-card-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(59, 130, 246, 0.15); /* Soft blue glow */
+  border-right: 2px solid rgba(59, 130, 246, 0.5);
+  z-index: 1;
+}
+
+/* If generating, make the border pulse slightly */
+.pf-card-generating {
+  border-color: rgba(59, 130, 246, 0.3);
+  pointer-events: none; /* Optional: prevents clicking the card until it's done */
+}
+
+/* Status Indicators */
+.pf-tick {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.pf-tick-red {
+  color: #FF6B6B; /* Red dot for Unread/New */
+}
+
+.pf-tick-blue {
+  color: #3b82f6; /* Blue check for Read */
+}
+
+.pf-status-text {
+  font-size: 0.65rem;
+  color: #3b82f6;
+  font-weight: 600;
+  animation: pf-pulse-text 1.5s infinite;
+}
+
+.pf-img-blur {
+  filter: blur(4px) grayscale(50%);
+  opacity: 0.6;
+}
+
+@keyframes pf-pulse-text {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

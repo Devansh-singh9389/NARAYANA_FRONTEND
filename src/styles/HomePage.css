@@ -1,0 +1,592 @@
+/* ===== Base / Layout ===== */
+.pf-page {
+  --bg: #0B0D14;
+  --surface: #151822;
+  --border: #2A2E3D;
+  --border-soft: #20232E;
+  --text: #F2F0EA;
+  --text-muted: #8B8FA3;
+  --text-faint: #6B7085;
+  --accent: #FF4C29;
+  --accent-soft: rgba(255, 76, 41, 0.12);
+  --violet: #7C5CFF;
+  --violet-soft: rgba(124, 92, 255, 0.14);
+  --danger: #FF6B6B;
+
+  min-height: 100vh;
+  max-width: 56rem;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  padding: 1.5rem 1rem 10rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 18px 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ===== Header ===== */
+.pf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.pf-title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  text-shadow: 2px 2px 0px var(--accent);
+  margin: 0;
+}
+
+.pf-subtitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0;
+}
+
+.pf-icon-btn {
+  padding: 0.6rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.pf-icon-btn:hover {
+  transform: rotate(45deg);
+}
+
+/* ===== Section label ===== */
+.pf-main {
+  flex: 1;
+}
+
+.pf-section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.pf-section-dash {
+  height: 2px;
+  width: 24px;
+  background: var(--accent);
+}
+
+.pf-section-label h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ===== Empty state ===== */
+.pf-empty {
+  text-align: center;
+  padding: 6rem 0;
+  border: 2px dashed var(--border);
+  border-radius: 1rem;
+}
+
+.pf-empty p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.pf-empty-sub {
+  color: var(--text-faint) !important;
+  font-size: 0.75rem !important;
+  margin-top: 0.25rem !important;
+}
+
+/* ===== History cards ===== */
+.pf-history-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.pf-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--surface);
+  border: 2px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  animation: pf-fade-in 0.4s ease both;
+}
+
+.pf-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.pf-card-info {
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.pf-btn-secondary {
+  padding: 0.55rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pf-btn-secondary:hover {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--text-faint);
+}
+
+.pf-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pf-tag-topic {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.pf-tag-story {
+  background: var(--violet-soft);
+  color: var(--violet);
+}
+
+.pf-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0.5rem 0 0;
+}
+
+.pf-card-date {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin: 0.25rem 0 0;
+}
+
+.pf-card-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pf-thumb {
+  width: 84px;
+  height: 58px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.pf-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== Card menu ===== */
+.pf-menu-wrap {
+  position: relative;
+}
+
+.pf-menu-btn {
+  padding: 0.35rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pf-menu-btn:hover {
+  background: var(--border-soft);
+  color: var(--text);
+}
+
+.pf-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+  width: 9rem;
+  border-radius: 0.75rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  padding: 0.25rem 0;
+  z-index: 20;
+}
+
+.pf-menu-delete {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: var(--danger);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pf-menu-delete:hover {
+  background: rgba(255, 107, 107, 0.1);
+}
+
+/* ===== Settings modal ===== */
+.pf-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.pf-modal {
+  width: 100%;
+  max-width: 28rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.pf-modal h3 {
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+}
+
+.pf-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.pf-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.pf-field input,
+.pf-field select {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.pf-field input:focus,
+.pf-field select:focus {
+  border-color: var(--accent);
+}
+
+.pf-modal-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pf-btn-primary {
+  padding: 0.55rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.pf-btn-primary:hover {
+  transform: scale(1.03);
+}
+
+/* ===== Bottom prompt bar ===== */
+.pf-prompt-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 1rem;
+  background: linear-gradient(to top, var(--bg) 40%, rgba(11, 13, 20, 0.95) 70%, transparent);
+}
+
+.pf-prompt-inner {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.pf-prompt-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 1.5rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pf-prompt-box.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* Generating state: gentle pulse on the border instead of a static freeze */
+.pf-prompt-box.is-generating {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 4px var(--violet-soft);
+  animation: pf-pulse-border 1.6s ease-in-out infinite;
+}
+
+/* --- Top bar: mode toggle + panel stepper --- */
+.pf-prompt-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.25rem 0.5rem;
+  border-bottom: 1px solid var(--border-soft);
+  flex-wrap: wrap;
+}
+
+.pf-prompt-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pf-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: var(--bg);
+}
+
+.pf-mode-btn {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pf-mode-topic.active {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.pf-mode-story.active {
+  background: var(--violet);
+  color: var(--bg);
+}
+
+.pf-mode-hint {
+  font-size: 0.68rem;
+  color: var(--text-faint);
+}
+
+@media (max-width: 640px) {
+  .pf-mode-hint {
+    display: none;
+  }
+}
+
+/* Panel stepper — the signature element: a tactile page-count stamp */
+.pf-panel-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+}
+
+.pf-panel-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+  padding-left: 0.35rem;
+}
+
+.pf-panel-step-btn {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: var(--border-soft);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.pf-panel-step-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--bg);
+  transform: scale(1.08);
+}
+
+.pf-panel-step-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pf-panel-value {
+  min-width: 30px;
+  text-align: center;
+  font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+}
+
+/* --- Input row --- */
+.pf-prompt-inputrow {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.pf-prompt-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 0.875rem;
+  color: var(--text);
+  font-family: inherit;
+}
+
+.pf-prompt-textarea::placeholder {
+  color: var(--text-faint);
+}
+
+.pf-prompt-textarea:disabled {
+  opacity: 0.5;
+}
+
+.pf-send-btn {
+  padding: 0.85rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: var(--border);
+  color: var(--bg);
+  transition: background 0.2s ease;
+}
+
+.pf-prompt-box.is-active .pf-send-btn {
+  background: var(--accent);
+}
+
+.pf-send-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.pf-send-spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(11, 13, 20, 0.25);
+  border-top-color: var(--bg);
+  animation: pf-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+/* Keyboard accessibility */
+.pf-mode-btn:focus-visible,
+.pf-panel-step-btn:focus-visible,
+.pf-send-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Animations ===== */
+@keyframes pf-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-pulse-border {
+  0%, 100% { box-shadow: 0 0 0 4px var(--violet-soft); }
+  50% { box-shadow: 0 0 0 7px var(--violet-soft); }
+}
+
+@keyframes pf-spin {
+  to { transform: rotate(360deg); }
+}
