@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SettingsModal from '../components/elements/SettingModel';
 import CardModel from '../components/elements/Card';
+const MemoizedCard = React.memo(CardModel);
 import PromptBoxModel from '../components/elements/PromptBox';
 import { deleteStoryApi, fetchHistoryApi, generateStoryApi, regenerateThumbnailApi } from '../services/api';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -42,9 +43,20 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!history.some(isPollingRequired)) return undefined;
-    const timer = window.setInterval(() => loadHistory(), 3000);
-    return () => window.clearInterval(timer);
+    let timer;
+    const poll = async () => {
+      await loadHistory();
+      timer = window.setTimeout(poll, 3000);
+    };
+    timer = window.setTimeout(poll, 3000);
+    return () => window.clearTimeout(timer);
   }, [history, loadHistory]);
+
+  useEffect(() => {
+    if (!notice) return undefined;
+    const timer = window.setTimeout(() => setNotice(''), 5000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
 
   const openStory = (id) => {
     setReadComicIds((ids) => ids.includes(id) ? ids : [...ids, id]);
@@ -106,7 +118,7 @@ const HomePage = () => {
         {error && <div className="pf-error" role="alert"><span>{error}</span><button onClick={() => loadHistory(true)} className="pf-btn-secondary">Retry</button></div>}
         {isLoading ? <div className="pf-empty"><p>Connecting to server...</p></div>
           : history.length === 0 && !error ? <div className="pf-empty"><p>Your first panel is one idea away.</p><p className="pf-empty-sub">Type your idea below to begin.</p></div>
-          : <div className="pf-history-grid">{history.map((story, index) => <CardModel key={story.id} story={{ ...story, isRead: story.isRead || readComicIds.includes(story.id) }} isCoverRegenerating={story.thumbnail_status === 'generating'} isMenuOpen={activeMenu === story.id} onOpen={() => openStory(story.id)} onToggleMenu={() => setActiveMenu(activeMenu === story.id ? null : story.id)} onDelete={() => handleDeleteHistory(story)} onRegenerate={() => handleRegenerateThumbnail(story.id)} style={{ animationDelay: `${index * 0.06}s` }} />)}</div>}
+          : <div className="pf-history-grid">{history.map((story, index) => <MemoizedCard key={story.id} story={{ ...story, isRead: story.isRead || readComicIds.includes(story.id) }} isCoverRegenerating={story.thumbnail_status === 'generating'} isMenuOpen={activeMenu === story.id} onOpen={() => openStory(story.id)} onToggleMenu={() => setActiveMenu(activeMenu === story.id ? null : story.id)} onDelete={() => handleDeleteHistory(story)} onRegenerate={() => handleRegenerateThumbnail(story.id)} style={{ animationDelay: `${index * 0.06}s` }} />)}</div>}
       </main>
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
       <PromptBoxModel prompt={prompt} setPrompt={setPrompt} mode={mode} setMode={setMode} sceneCount={sceneCount} setSceneCount={setSceneCount} onSubmit={handleGenerate} isGenerating={isGenerating} />

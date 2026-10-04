@@ -38,11 +38,11 @@ const request = async (path, options = {}) => {
 export const fetchHistoryApi = () => request('/comics').then((data) => data.comics || []);
 export const fetchComicByIdApi = (id) => request(`/comics/${encodeURIComponent(id)}`);
 
-export const generateStoryApi = (prompt, mode, sceneCount = 0) =>
+export const generateStoryApi = (prompt, mode, sceneCount = 0, renderModel = 'sdxl') =>
   request('/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ topic: prompt, mode, num_scenes: sceneCount }),
+    body: JSON.stringify({ topic: prompt, mode, num_scenes: sceneCount, render_model: renderModel }),
   });
 
 export const deleteStoryApi = (id) =>

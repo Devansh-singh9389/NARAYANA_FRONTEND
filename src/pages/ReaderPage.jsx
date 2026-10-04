@@ -36,8 +36,13 @@ const ReaderPage = () => {
   useEffect(() => { loadComic(true); }, [loadComic]);
   useEffect(() => {
     if (!comic || !POLLING_STATUSES.has(comic.status)) return undefined;
-    const timer = window.setInterval(() => loadComic(), 2500);
-    return () => window.clearInterval(timer);
+    let timer;
+    const poll = async () => {
+      await loadComic();
+      timer = window.setTimeout(poll, 2500);
+    };
+    timer = window.setTimeout(poll, 2500);
+    return () => window.clearTimeout(timer);
   }, [comic, loadComic]);
 
   const scenes = (comic?.scenes || []).filter((scene) => Boolean(scene.imageUrl));
@@ -126,7 +131,7 @@ const ReaderPage = () => {
           <div className="pf-scene-stage">
             <AnimatePresence mode="wait">
               <motion.figure key={currentScene?.id || sceneIndex} className="pf-scene-frame" initial={{ opacity: 0, x: transitionDirection * 28 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: transitionDirection * -28 }} transition={{ duration: 0.35, ease: 'easeOut' }}>
-                <img className="pf-scene-image" src={getAssetUrl(currentScene?.imageUrl)} alt={`Scene ${sceneIndex + 1}: ${currentScene?.narration || 'comic panel'}`} />
+                <img className="pf-scene-image" loading="lazy" src={getAssetUrl(currentScene?.imageUrl)} alt={`Scene ${sceneIndex + 1}: ${currentScene?.narration || 'comic panel'}`} />
               </motion.figure>
             </AnimatePresence>
           </div>

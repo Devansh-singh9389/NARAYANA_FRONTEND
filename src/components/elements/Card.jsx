@@ -23,7 +23,7 @@ const Card = ({ story, isCoverRegenerating, isMenuOpen, onOpen, onToggleMenu, on
   return (
     <motion.article layoutId={`story-card-${story.id}`} onClick={onOpen} onKeyDown={(event) => event.key === 'Enter' && onOpen()} tabIndex={0} role="link" aria-label={`Open ${story.title || 'comic'}`} className={`pf-card pf-card-vertical ${isActive ? 'pf-card-generating' : ''} ${isCoverRegenerating ? 'pf-card-cover-queue' : ''}`} style={style} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -4, borderColor: 'var(--accent)' }}>
       <div className="pf-card-cover">
-        {thumbSrc ? <img src={thumbSrc} alt={story.title || 'Comic cover'} className={isGenerating ? 'pf-img-blur' : ''} onError={(event) => { event.currentTarget.style.opacity = '0'; }} /> : <span className="pf-thumb-fallback">{isComicActive ? 'Generating cover…' : 'No cover yet'}</span>}
+        {thumbSrc ? <img loading="lazy" src={thumbSrc} alt={story.title || 'Comic cover'} className={isGenerating ? 'pf-img-blur' : ''} onError={(event) => { event.currentTarget.style.opacity = '0'; }} /> : <span className="pf-thumb-fallback">{isComicActive ? 'Generating cover…' : 'No cover yet'}</span>}
       </div>
       <div className="pf-menu-wrap">
         <button onClick={(event) => { event.stopPropagation(); onToggleMenu(); }} className="pf-menu-btn" aria-label={`Actions for ${story.title || 'comic'}`} aria-expanded={isMenuOpen}>⋮</button>
