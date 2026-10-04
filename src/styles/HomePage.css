@@ -841,3 +841,501 @@
   .pf-scene-dots { display: none; }
   .pf-reader-controls .pf-btn-primary { width: 100%; }
 }
+
+/* ========================================================
+   MODERN COMIC UPGRADES: GENRE CHIPS, MODEL SELECTOR, AMBIENT GLOW
+   ======================================================== */
+
+/* Genre Preset Chips in PromptBox */
+.pf-genre-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.25rem 0.5rem 0.5rem;
+  scrollbar-width: none;
+}
+.pf-genre-chips::-webkit-scrollbar { display: none; }
+.pf-genre-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.pf-genre-chip {
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pf-genre-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* Model Selector in Prompt Box */
+.pf-model-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.pf-model-btn {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pf-model-btn:hover {
+  color: var(--text);
+}
+.pf-model-btn.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.45);
+}
+
+/* Card Model Badge */
+.pf-card-model-badge {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.4rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+}
+.pf-badge-sdxl {
+  background: rgba(14, 165, 233, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.pf-badge-flux {
+  background: rgba(168, 85, 247, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.pf-badge-imagen {
+  background: rgba(34, 197, 94, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Toast Banner */
+.pf-toast-banner {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(24, 28, 42, 0.95);
+  border: 1px solid var(--accent);
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.3);
+  color: var(--text);
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  z-index: 100;
+  animation: pf-toast-fade 0.3s ease-out;
+}
+@keyframes pf-toast-fade {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Reader Header Updates */
+.pf-reader-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.pf-reader-header-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 14rem;
+}
+.pf-reader-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Reader Model Hot-Swapper Bar */
+.pf-reader-model-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.pf-model-bar-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-right: 0.2rem;
+}
+.pf-reader-model-chip {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pf-reader-model-chip:hover:not(:disabled) {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+.pf-reader-model-chip.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+.pf-reader-model-chip:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* 3-Way Reader Mode Toggle */
+.pf-reader-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+.pf-mode-pill {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pf-mode-pill:hover {
+  color: var(--text);
+}
+.pf-mode-pill.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.pf-autoplay-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pf-autoplay-btn.active {
+  background: #10b981;
+  color: #fff;
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+/* Ambient Backlight Halo */
+.pf-ambient-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 55%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(75px) brightness(0.65) saturate(1.4);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+  transition: background-image 0.8s ease-in-out;
+}
+
+/* Comic Speech Bubbles & Narration Overlay */
+.pf-comic-overlay-container {
+  max-width: 48rem;
+  margin: -1.5rem auto 1rem;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pf-narration-box {
+  background: rgba(18, 20, 29, 0.96);
+  border: 2px solid #3b82f6;
+  border-left-width: 6px;
+  border-radius: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.4);
+  text-align: left;
+}
+.pf-narration-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #60a5fa;
+  margin-bottom: 0.25rem;
+}
+.pf-narration-box p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.pf-dialogues-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+.pf-speech-bubble {
+  position: relative;
+  background: #ffffff;
+  color: #0f172a;
+  border: 2px solid #0f172a;
+  border-radius: 1.25rem;
+  padding: 0.75rem 1.25rem;
+  max-width: 85%;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+  font-family: inherit;
+  font-weight: 600;
+}
+.pf-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -0.55rem;
+  left: 2rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #ffffff;
+  border-right: 2px solid #0f172a;
+  border-bottom: 2px solid #0f172a;
+  transform: rotate(45deg);
+}
+.pf-speech-speaker {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin-right: 0.4rem;
+}
+.pf-speech-bubble p {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* ========================================================
+   WEBTOON MODE: CONTINUOUS VERTICAL SCROLL
+   ======================================================== */
+.pf-webtoon-container {
+  width: 100%;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+.pf-webtoon-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.pf-webtoon-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #090a0f;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.5);
+}
+.pf-webtoon-panel-header {
+  display: flex;
+  justify-content: flex-start;
+}
+.pf-panel-number {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+}
+.pf-webtoon-image-wrap {
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 2px solid #1e293b;
+  background: #000;
+}
+.pf-webtoon-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.pf-webtoon-image:hover {
+  transform: scale(1.015);
+}
+.pf-webtoon-narration {
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 4px solid var(--accent);
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+.pf-webtoon-dialogues {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+/* ========================================================
+   COMIC GRID SPREAD MODE (2-COLUMN GRAPHIC NOVEL LAYOUT)
+   ======================================================== */
+.pf-comic-grid-spread {
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+.pf-grid-book-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.pf-comic-page-cell {
+  position: relative;
+  background: #0a0b10;
+  border: 2px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+}
+.pf-comic-page-cell:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+.pf-cell-badge {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.35rem;
+  z-index: 5;
+}
+.pf-cell-frame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #000;
+}
+.pf-cell-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pf-cell-text {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pf-cell-narration {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.55;
+  font-style: italic;
+}
+.pf-cell-dialogues {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.pf-cell-speech {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+.pf-cell-speech strong {
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .pf-grid-book-layout {
+    grid-template-columns: 1fr;
+  }
+  .pf-reader-header {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .pf-reader-model-bar {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+}

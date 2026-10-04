@@ -17,6 +17,7 @@ const HomePage = () => {
   const [prompt, setPrompt] = useState('');
   const [mode, setMode] = useState('topic');
   const [sceneCount, setSceneCount] = useState(0);
+  const [renderModel, setRenderModel] = useState('sdxl');
   const [activeMenu, setActiveMenu] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -81,7 +82,7 @@ const HomePage = () => {
     setIsGenerating(true);
     setError('');
     try {
-      const response = await generateStoryApi(prompt, mode, sceneCount);
+      const response = await generateStoryApi(prompt, mode, sceneCount, renderModel);
       navigate(`/comic/${response.comic_id}`, { state: { fromPrompt: true } });
     } catch (requestError) {
       setError(requestError.message || 'Could not start generation.');
@@ -121,7 +122,7 @@ const HomePage = () => {
           : <div className="pf-history-grid">{history.map((story, index) => <MemoizedCard key={story.id} story={{ ...story, isRead: story.isRead || readComicIds.includes(story.id) }} isCoverRegenerating={story.thumbnail_status === 'generating'} isMenuOpen={activeMenu === story.id} onOpen={() => openStory(story.id)} onToggleMenu={() => setActiveMenu(activeMenu === story.id ? null : story.id)} onDelete={() => handleDeleteHistory(story)} onRegenerate={() => handleRegenerateThumbnail(story.id)} style={{ animationDelay: `${index * 0.06}s` }} />)}</div>}
       </main>
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
-      <PromptBoxModel prompt={prompt} setPrompt={setPrompt} mode={mode} setMode={setMode} sceneCount={sceneCount} setSceneCount={setSceneCount} onSubmit={handleGenerate} isGenerating={isGenerating} />
+      <PromptBoxModel prompt={prompt} setPrompt={setPrompt} mode={mode} setMode={setMode} sceneCount={sceneCount} setSceneCount={setSceneCount} renderModel={renderModel} setRenderModel={setRenderModel} onSubmit={handleGenerate} isGenerating={isGenerating} />
     </div>
   );
 };

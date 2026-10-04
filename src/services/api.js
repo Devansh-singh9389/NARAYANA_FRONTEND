@@ -53,3 +53,9 @@ export const resumeStoryApi = (id) =>
   request(`/comics/${encodeURIComponent(id)}/resume`, { method: 'POST' });
 export const regenerateThumbnailApi = (id) =>
   request(`/comics/${encodeURIComponent(id)}/thumbnail`, { method: 'POST' });
+export const regenerateComicModelApi = (id, renderModel) =>
+  request(`/comics/${encodeURIComponent(id)}/regenerate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ render_model: renderModel }),
+  });
